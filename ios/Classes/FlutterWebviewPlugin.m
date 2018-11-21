@@ -103,8 +103,16 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
     } else {
         rc = self.viewController.view.bounds;
     }
+    
+    //--------WKWebViewConfiguration--------
+    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    //JS调用OC。所有的操作都是通过WKUserContentController来处理的
+    WKUserContentController *userContentController = [[WKUserContentController alloc] init];
+    [userContentController addScriptMessageHandler:self name:@"connectService"];
+    config.userContentController = userContentController;
+    
+    self.webview = [[WKWebView alloc] initWithFrame:rc configuration:config];
 
-    self.webview = [[WKWebView alloc] initWithFrame:rc];
     self.webview.navigationDelegate = self;
     self.webview.scrollView.delegate = self;
     self.webview.hidden = [hidden boolValue];
@@ -232,6 +240,14 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
 - (void)cleanCookies {
     [[NSURLSession sharedSession] resetWithCompletionHandler:^{
         }];
+}
+
+//MARK: ------------- WKNavigationDelegate ------------
+//JS调OC
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
+    if ([message.name  isEqual: @"connectService"]) {
+        [channel invokeMethod:@"toService" arguments:nil];
+    }
 }
 
 #pragma mark -- WkWebView Delegate
