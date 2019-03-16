@@ -365,7 +365,7 @@ class WebviewManager {
             Map<String, Object> data = new HashMap<>();
             data.put("key", key);
             data.put("value", "value");
-            FlutterWebviewPlugin.channel.invokeMethod("toService", data);
+            FlutterWebviewPlugin.channel.invokeMethod("sendMessage", data);
         }
         
         @JavascriptInterface
@@ -375,7 +375,7 @@ class WebviewManager {
             data.put("contentType", contentType);
             data.put("id", id);
             data.put("code", code);
-            FlutterWebviewPlugin.channel.invokeMethod("toService", data);
+            FlutterWebviewPlugin.channel.invokeMethod("selectContent", data);
         }
     }
 }
