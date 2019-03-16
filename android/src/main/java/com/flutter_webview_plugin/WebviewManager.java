@@ -377,5 +377,13 @@ class WebviewManager {
             data.put("code", code);
             FlutterWebviewPlugin.channel.invokeMethod("selectContent", data);
         }
+        
+        @JavascriptInterface
+        public void onUrlChangedJs(String url) {
+            System.out.println("onUrlChangedJs");
+            Map<String, Object> data = new HashMap<>();
+            data.put("url", url);
+            FlutterWebviewPlugin.channel.invokeMethod("onUrlChangedJs", data);            
+        }
     }
 }
