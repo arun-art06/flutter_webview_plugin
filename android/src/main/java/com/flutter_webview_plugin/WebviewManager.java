@@ -358,5 +358,24 @@ class WebviewManager {
             System.out.println("toservice");
             FlutterWebviewPlugin.channel.invokeMethod("toService", null);
         }
+        
+        @JavascriptInterface
+        public void sendMessage(String key,String value) {
+            System.out.println("sendMessage");
+            Map<String, Object> data = new HashMap<>();
+            data.put("key", key);
+            data.put("value", "value");
+            FlutterWebviewPlugin.channel.invokeMethod("toService", data);
+        }
+        
+        @JavascriptInterface
+        public void selectContent(String contentType,String id,String code) {
+            System.out.println("selectContent");
+            Map<String, Object> data = new HashMap<>();
+            data.put("contentType", contentType);
+            data.put("id", id);
+            data.put("code", code);
+            FlutterWebviewPlugin.channel.invokeMethod("toService", data);
+        }
     }
 }
