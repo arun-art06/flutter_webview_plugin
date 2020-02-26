@@ -172,7 +172,7 @@ class WebviewManager {
                 return true;
             }
         });
-        webView.addJavascriptInterface(new FlutterJsInterface(), "Android");
+        //webView.addJavascriptInterface(new FlutterJsInterface(), "Android");
 
     }
 
